@@ -33,7 +33,9 @@ After the MN is up and running, you need to configure the desktop wallet accordi
 
 ## Usage:
 ```
-Intermodald masternode status #This will show whether your MN is active or not. If status is 9, you are good to go.
+#This will show whether your MN is active or not. If status is 9, you are good to go.
+Intermodald masternode status
+
 Intermodald getinfo
 ```
 Also, if you want to check/start/stop **Intermodal**, run one of the following commands as **root**:
