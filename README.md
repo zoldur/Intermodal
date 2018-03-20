@@ -1,5 +1,5 @@
 # Intermodal
-Shell script to install a [Intermodal Coin asternode](http://intermodalcoin.online/) on a Linux server running Ubuntu 16.04. Use it on your own risk.
+Shell script to install a [Intermodal Coin Masternode](http://intermodalcoin.online/) on a Linux server running Ubuntu 16.04. Use it on your own risk.
 ***
 
 ## Installation
