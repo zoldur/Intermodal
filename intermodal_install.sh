@@ -6,7 +6,8 @@ CONFIGFOLDER='/root/.intermodalcoin'
 COIN_DAEMON='intermodalcoind'
 COIN_CLI='intermodalcoind'
 COIN_PATH='/usr/local/bin/'
-COIN_REPO='https://github.com/Intermodalcoin/Intermodal-Coin.git'
+COIN_TGZ='https://github.com/Intermodalcoin/Intermodal-Coin/releases/download/1.0.5/imc-precompiled-daemon-15.zip'
+COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='Intermodal'
 COIN_PORT=11707
 RPC_PORT=11708
@@ -18,20 +19,19 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-
-function compile_node() {
-  echo -e "Prepare to compile $COIN_NAME"
-  git clone $COIN_REPO $TMP_FOLDER >/dev/null 2>&1
-  compile_error
-  cd $TMP_FOLDER/src
-  make -f makefile.unix
+function download_node() {
+  echo -e "Prepare to download $COIN_NAME binaries"
+  cd $TMP_FOLDER
+  wget -q $COIN_TGZ
+  unzip $COIN_ZIP >/dev/null 2>&1
   compile_error
   cp $COIN_DAEMON $COIN_PATH
-  strip $COIN_PATH$COIN_DAEMON 
-  cd ~ >/dev/null 2>&1
-  rm -rf $TMP_FOLDER >/dev/null 2>&1
+  chmod +x $COIN_PATH$COIN_DAEMON 
+  cd - >/dev/null 2>&1
+  rm -r $TMP_FOLDER >/dev/null 2>&1
   clear
 }
+
 
 function configure_systemd() {
   cat << EOF > /etc/systemd/system/$COIN_NAME.service
@@ -122,6 +122,8 @@ maxconnections=256
 masternode=1
 externalip=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
+addnode=108.61.199.27:11707
+addnode=140.82.56.73:11707
 EOF
 }
 
@@ -216,25 +218,6 @@ fi
 clear
 }
 
-function create_swap() {
- echo -e "Checking if swap space is needed."
- PHYMEM=$(free -g|awk '/^Mem:/{print $2}')
- SWAP=$(free -g|awk '/^Swap:/{print $2}')
- if [ "$PHYMEM" -lt "2" ] && [ -n "$SWAP" ]
-  then
-    echo -e "${GREEN}Server is running with less than 2G of RAM without SWAP, creating 2G swap file.${NC}"
-    SWAPFILE=$(mktemp)
-    dd if=/dev/zero of=$SWAPFILE bs=1024 count=2M
-    chmod 600 $SWAPFILE
-    mkswap $SWAPFILE
-    swapon -a $SWAPFILE
- else
-  echo -e "${GREEN}Server running with at least 2G of RAM, no swap needed.${NC}"
- fi
- clear
-}
-
-
 function important_information() {
  echo
  echo -e "================================================================================================================================"
@@ -265,6 +248,5 @@ clear
 
 checks
 prepare_system
-create_swap
-compile_node
+download_node
 setup_node
