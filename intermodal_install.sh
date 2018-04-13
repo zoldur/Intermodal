@@ -6,7 +6,7 @@ CONFIGFOLDER='/root/.intermodalcoin'
 COIN_DAEMON='intermodalcoind'
 COIN_CLI='intermodalcoind'
 COIN_PATH='/usr/local/bin/'
-COIN_TGZ='https://github.com/Intermodalcoin/Intermodal-Coin/releases/download/1.0.5/imc-precompiled-daemon-15.zip'
+COIN_TGZ='https://github.com/zoldur/Intermodal/releases/download/v.1.0.0.4/intermodalcoind.tar.gz'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='Intermodal'
 COIN_PORT=11707
@@ -23,7 +23,7 @@ function download_node() {
   echo -e "Prepare to download $COIN_NAME binaries"
   cd $TMP_FOLDER
   wget -q $COIN_TGZ
-  unzip $COIN_ZIP >/dev/null 2>&1
+  tar xvzf $COIN_ZIP >/dev/null 2>&1
   compile_error
   cp $COIN_DAEMON $COIN_PATH
   chmod +x $COIN_PATH$COIN_DAEMON 
