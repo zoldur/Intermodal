@@ -1,5 +1,6 @@
 # Intermodal
 Shell script to install a [Intermodal Coin Masternode](http://intermodalcoin.online/) on a Linux server running Ubuntu 16.04. Use it on your own risk.
+This script will install **Intermodal 1.0.6**.
 ***
 
 ## Installation
