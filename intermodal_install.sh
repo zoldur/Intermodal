@@ -23,7 +23,7 @@ function download_node() {
   echo -e "Prepare to download $COIN_NAME binaries"
   cd $TMP_FOLDER
   wget -q $COIN_TGZ
-  unzip $COIN_ZIP >/dev/null 2>&1
+  tar xvzf $COIN_ZIP >/dev/null 2>&1
   compile_error
   cp $COIN_DAEMON $COIN_PATH
   chmod +x $COIN_PATH$COIN_DAEMON 
