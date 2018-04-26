@@ -32,6 +32,21 @@ After the MN is up and running, you need to configure the desktop wallet accordi
 10. Click **Start All**  
 ***
 
+## Masternode update:
+
+Please run the following commands as root to update Intermodal to version 1.0.6
+```
+cd /tmp
+wget -q https://github.com/Intermodalcoin/Intermodal-Coin/files/1935651/imc-wallet-linux-16-daemon-precompiled.zip
+unzip imc-wallet-linux-16-daemon-precompiled.zip
+systemctl stop Intermodal
+chmod +x intermodalcoind
+mv intermodalcoind /usr/local/bin
+systemctl start Intermodal
+rm imc-wallet-linux-16-daemon-precompiled.zip
+cd -
+```
+
 ## Usage:
 ```
 #This will show whether your MN is active or not. If status is 9, you are good to go.
