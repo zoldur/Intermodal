@@ -8,6 +8,7 @@ COIN_CLI='intermodalcoind'
 COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/Intermodalcoin/Intermodal-Coin/files/1935651/imc-wallet-linux-16-daemon-precompiled.zip'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
+COIN_BLOCK='https://github.com/zoldur/Intermodal/releases/download/v.1.0.0.6/blocks.tar.gz'
 COIN_NAME='Intermodal'
 COIN_PORT=11707
 RPC_PORT=11708
@@ -32,6 +33,15 @@ function download_node() {
   clear
 }
 
+
+function download_blocks() {
+ echo -e "Downloading $COIN_NAME blocks"
+ cd $CONFIGFOLDER
+ wget -q $COIN_BLOCK
+ tar xvzf blocks.tar.gz >/dev/null 2>&1
+ rm blocks.tar.gz
+ cd -
+}
 
 function configure_systemd() {
   cat << EOF > /etc/systemd/system/$COIN_NAME.service
@@ -235,6 +245,7 @@ function setup_node() {
   create_config
   create_key
   update_config
+  download_blocks
   enable_firewall
   important_information
   configure_systemd
