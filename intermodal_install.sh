@@ -6,7 +6,7 @@ CONFIGFOLDER='/root/.intermodalcoin'
 COIN_DAEMON='intermodalcoind'
 COIN_CLI='intermodalcoind'
 COIN_PATH='/usr/local/bin/'
-COIN_TGZ='https://github.com/Intermodalcoin/Intermodal-Coin/files/1981435/imc-wallet-linux-17-daemon-precompiled.zip'
+COIN_TGZ='https://github.com/Intermodalcoin/Intermodal-Coin/files/2023806/imc-wallet-linux-18-ubu1604.zip'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_BLOCK='https://github.com/zoldur/Intermodal/releases/download/v.1.0.0.6/blocks.tar.gz'
 COIN_NAME='Intermodal'
@@ -245,7 +245,7 @@ function setup_node() {
   create_config
   create_key
   update_config
-  download_blocks
+  #download_blocks
   enable_firewall
   important_information
   configure_systemd
